@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-c2aiz84%f580f10e374fm&5j^k22q!^%7#g+s54_lr+ql5$b&4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.onrender.com']
+
 
 
 # Application definition
@@ -123,7 +124,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'   # This is where the static files will be collected in production.
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')   # This is where the static files will be collected in production.
 STATICFILES_DIRS = [BASE_DIR / 'public']  # Points to where your static files are located in development.
 
 # Media files

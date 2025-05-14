@@ -19,7 +19,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles' 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+ 
 STATICFILES_DIRS = [BASE_DIR / 'public']  # Adjust this if your static files are in a different directory.
 
 # Media files
@@ -39,7 +40,8 @@ SECRET_KEY = 'django-insecure-vx-#)^q$wrsi%axu+01l@*@vci)b63d@+o4)kmr%&c8yt8_&4m
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.onrender.com']
+
 
 
 # Application definition
