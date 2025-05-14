@@ -1,1 +1,1 @@
-web: gunicorn ecomm.wsgi
+web: gunicorn reommend.wsgi
