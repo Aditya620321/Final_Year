@@ -121,18 +121,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_ROOT = 'staticfiles'
+# Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'   # This is where the static files will be collected in production.
+STATICFILES_DIRS = [BASE_DIR / 'public']  # Points to where your static files are located in development.
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
-
-STATICFILES_DIR = {
-    os.path.join(BASE_DIR , "public/static")
-}
-
-MEDIA_ROOT =  os.path.join(BASE_DIR, 'public/static') 
+# Media files
 MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'public/media')  # Adjust this if your media files are in a different directory
+
 
 
 # Default primary key field type

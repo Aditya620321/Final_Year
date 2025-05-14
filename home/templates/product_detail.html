@@ -1,0 +1,133 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .product, .similar-product {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .product img, .similar-product img {
+            max-width: 150px;
+            margin-right: 20px;
+        }
+        .product-details {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <h1>Product Details</h1>
+    <div id="product"></div>
+
+    <h2>Similar Products</h2>
+    <div id="similar-products"></div>
+    {{id}}
+    <script>
+        // Fetch API data
+        {{id}}
+        async function fetchProductData() {
+            try {
+                const response = await fetch('http://127.0.0.1:8000/product/{{id}}/'); // Replace with actual API endpoint
+                const data = await response.json();
+                displayProduct(data.product);
+                displaySimilarProducts(data.similar_products);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        // Display main product
+       
+       function displayProduct(product) {
+    const productContainer = document.getElementById('product');
+    productContainer.innerHTML = `
+        <style>
+            /* Button styles */
+            .button-container a {
+                padding: 12px 20px;
+                border-radius: 30px;
+                text-align: center;
+                font-size: 16px;
+                font-weight: bold;
+                text-decoration: none;
+                display: inline-block;
+                transition: all 0.3s ease;
+            }
+
+            /* Add to Cart Button */
+            .btn-primary {
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+            }
+
+            .btn-primary:hover {
+                background-color: #0056b3;
+                transform: translateY(-3px);
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            }
+
+            /* Go to Cart Button */
+            .btn-outline-primary {
+                border: 2px solid #007bff;
+                color: #007bff;
+                background-color: transparent;
+            }
+
+            .btn-outline-primary:hover {
+                background-color: #007bff;
+                color: #fff;
+                transform: translateY(-3px);
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            }
+
+            /* Add smooth hover effect */
+            button, .btn {
+                cursor: pointer;
+            }
+        </style>
+        <div class="product">
+            <img src="${product.product_image}" alt="${product.name}">
+            <div class="product-details">
+                <h2>${product.name}</h2>
+                <p>${product.description}</p>
+                <strong>Price: ₹${product.price}</strong><br><br>
+                <div class="button-container">
+                    <a href="/add-to-cart/${product.id}/" class="btn btn-primary">Add to Cart</a>
+                    <a href="/cart/" class="btn btn-outline-primary" style="margin-left:10px;">Go to Cart</a>
+                </div>
+            </div>
+        </div>
+    `;
+}
+        // Display similar products
+        function displaySimilarProducts(products) {
+            const similarProductsContainer = document.getElementById('similar-products');
+            similarProductsContainer.innerHTML = products.map(product => `
+                <div class="similar-product">
+                    <img src="${product.product_image}" alt="${product.name}">
+                    <div class="product-details">
+                        <h3>${product.name}</h3>
+                        <p>${product.description}</p>
+                        <strong>Price: ₹${product.price}</strong>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Trigger API call on page load
+        fetchProductData();
+    </script>
+</body>
+</html>

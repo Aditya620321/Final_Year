@@ -44,6 +44,7 @@ class Product(BaseModel):
     product_desription = models.TextField()
     color_variant = models.ManyToManyField(ColorVariant , blank=True)
     size_variant = models.ManyToManyField(SizeVariant , blank=True)
+    image_url = models.URLField(blank=True, null=True)
 
 
     

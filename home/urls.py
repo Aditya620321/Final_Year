@@ -1,7 +1,11 @@
 from django.urls import path
-from home.views import index
+from . import views
+from django.conf import settings
+from django.conf.urls.static import static
+app_name = 'home'
 
 urlpatterns = [
-   
-    path('' , index , name="index"),
+    path('', views.home_view, name='home'),
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

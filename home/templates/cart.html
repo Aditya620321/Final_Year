@@ -1,0 +1,165 @@
+
+{% extends "base/base.html" %}
+{% load static %}
+{% block start %}
+<style>
+  .cart-container {
+    max-width: 900px;
+    margin: auto;
+  }
+
+  .cart-card {
+    background-color: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  .cart-card img {
+    width: 90px;
+    height: 90px;
+    border-radius: 12px;
+    object-fit: cover;
+  }
+
+  .cart-info {
+    flex: 1;
+    margin-left: 20px;
+  }
+
+  .cart-info h5 {
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .cart-info small {
+    color: #888;
+    display: block;
+    margin-top: 4px;
+  }
+
+  .quantity-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .quantity-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    background-color: #eee;
+    font-weight: bold;
+    font-size: 16px;
+  }
+
+  .item-price {
+    font-weight: 600;
+    color: #6c5ce7;
+  }
+
+  .remove-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    background: none;
+    font-size: 20px;
+    color: #bbb;
+  }
+
+  .subtotal-section {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-top: 30px;
+  }
+
+  .cart-actions {
+    display: flex;
+    justify-content: center;
+    margin-bottom:30px;
+    gap: 20px;
+  }
+
+  .btn-purple {
+    background-color: #b50f39;
+    color: white;
+    padding: 14px 30px;
+    border-radius: 25px;
+    font-size: 1rem;
+    border: none;
+    text-decoration: none;
+  }
+
+  .btn-purple:hover {
+    background-color: #621d98;
+  }
+
+  .d4 {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    gap: 20px;
+  }
+</style>
+
+<div class="d4">
+  <h3 class="fw-bold" style="font-size: 2rem;">Your Shopping Cart</h3>
+</div>
+
+<div class="container cart-container my-5">
+  {% if cart_items %}
+    {% for item in cart_items %}
+      <div class="cart-card">
+        {% if item.product.image %}
+  <!-- <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}"> -->
+{% else %}
+  <!-- <img src="{{ MEDIA_URL }}product_images/default.jpg" alt="{{ item.product.name }}"> -->
+{% endif %}
+
+
+        <div class="cart-info">
+          <h4>{{ item.product.name }}</h4>
+          <small>{{ item.product.color }}</small>
+        </div>
+
+        <!-- <form method="POST" action="{% url 'update_cart' item.product.id %}" class="quantity-control">
+          {% csrf_token %}
+          <button type="submit" name="quantity" value="{{ item.quantity|add:'-1' }}" class="quantity-btn">-</button>
+          <span>{{ item.quantity }}</span>
+          <button type="submit" name="quantity" value="{{ item.quantity|add:'1' }}" class="quantity-btn">+</button>
+        </form> -->
+
+        <div class="item-price ml-3">₹{{ item.product.price|floatformat:2 }}</div>
+
+        <form method="POST" action="{% url 'remove_from_cart' item.product.id %}">
+          {% csrf_token %}
+          <button class="remove-btn" title="Remove">&times;</button>
+        </form>
+      </div>
+    {% endfor %}
+
+    <div class="subtotal-section">
+    <div style="color:#6c5ce7;">Total: ₹{{ total_price|floatformat:2 }}</div>  
+</div>
+
+    <div class="cart-actions">
+  <a href="/checkout/" class="btn-purple">Checkout</a>
+</div>
+
+  {% else %}
+    <div class="alert alert-info text-center">
+      <h4>Your cart is empty.</h4> 
+      <!-- <a href="/products/">Continue shopping</a> -->
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
